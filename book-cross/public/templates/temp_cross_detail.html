@@ -1,0 +1,62 @@
+<div class="col-md-12">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{detailClassId}}班 图书漂流信息</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                <strong>漂来日期：{{detailBeginTime}}</strong>
+                <strong>漂出日期：{{detailOverTime}}</strong>
+            </p>
+        </div>
+        <table class="table table-bordered table-condensed table-striped table-hover">
+            <thead>
+                <th>姓名</th>
+                <th>书名</th>
+                <th>领取时间</th>
+                <th>归还时间</th>
+                <th>状态</th>
+                <th><button ng-click="on_borrow_all()" ng-class="borrow_all_value| filter_all_class">{{borrow_all_value| filter_borrow_all_status}}</button></th>
+                <th><button ng-click="on_return_all()" ng-class="return_all_value| filter_all_class">{{return_all_value| filter_return_all_status}}</button></th>
+                <th>备注</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k, info) in detail_infos">
+                    <td>{{info.studentName}}</td>
+                    <td>{{info.bookName}}</td>
+                    <td>{{info.borrowTime}}</td>
+                    <td>{{info.backTime}}</td>
+                    <td>{{info.state| filter_borrow_status}}</td>
+                    <td>
+                        <label><input type="checkbox" ng-model="info.borrow_value" disabled/></label>
+                        <button class="btn btn-xs btn-info" ng-click="on_borrow(k)">已领取</button>
+                    </td>
+                    <td>
+                        <label><input type="checkbox" ng-model="info.return_value" disabled/></label>
+                        <div class="btn-group-vertical" role="group">
+                            <button type="button" class="btn btn-xs btn-info" ng-click="on_return(k)">已归还</button>
+                            <button type="button" class="btn btn-xs btn-primary" ng-click="openModal(k)">已替换</button>
+                        </div>
+                    </td>
+                    <td>暂无</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title"><strong>替换情况</strong></h3>
+    </div>
+    <div class="modal-body text-center">
+        确定用
+        <input ng-model="new_book">
+        替换
+        《{{replace_book}}》?
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">确定</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>
