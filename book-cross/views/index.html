@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="app_index">
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/public/stylesheets/bootstrap-custom.css'/>
+    <script src="/public/javascripts/angular.min.js"></script>
+    <script src="/public/javascripts/angular-animate.min.js"></script>
+    <script src="/public/javascripts/ui-bootstrap-tpls.min.js"></script>
+    <script src="/public/js/index.js"></script>
+</head>
+<body ng-controller="ctrl_index">
+<div class="jumbotron">
+    <div class="container">
+        <div class="page-header">
+            <h1>西辛小学图书漂流
+                <small>Alpha 0.0.1</small>
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">我是管理员</h2>
+                    </div>
+                    <div class="panel-body" style="min-height: 200px">
+                        <p>管理员可以配置活动流程、管理图书信息、将图书整理为套系。</p>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-success btn-block" type="button" ng-click="openModal(0)">登录
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">我是普通教师</h2>
+                    </div>
+                    <div class="panel-body" style="min-height: 200px">
+                        <p>普通教师可以查看班级的借书单以及完成借出和返还图书的相关操作。</p>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-info btn-block" type="button" ng-click="openModal(1)">
+                            登录
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="modalSign.html">
+    <form novalidate class="form-horizontal" id="signForm" name="signForm">
+        <div class="modal-header">
+            <h3 class="modal-title">用户登录</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="uname" class="col-sm-2 control-label">用户名：</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="uname" name="uname" ng-model="userInfo.username"
+                           required
+                           placeholder="请填写您的用户名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pwd" class="col-sm-2 control-label">密码：</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="pwd" name="pwd" ng-model="userInfo.password"
+                           required
+                           placeholder="请填写您的密码">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-primary" type="button" ng-click="signIn()" ng-disabled="signForm.$invalid">
+                        登录
+                    </button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
+
+
+</body>
+</html>

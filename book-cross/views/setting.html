@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="app_setting">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/public/stylesheets/bootstrap-custom.css">
+
+    <script src="/public/javascripts/angular.min.js"></script>
+    <script src="/public/javascripts/angular-route.min.js"></script>
+    <script src="/public/javascripts/angular-animate.min.js"></script>
+    <script src="/public/javascripts/ui-bootstrap-tpls.min.js"></script>
+    <script src="/public/javascripts/uploader.min.js"></script>
+    <script src="/public/js/setting.js"></script>
+</head>
+<body ng-controller="ctrl_setting">
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="list-group">
+                <a href="#/book" class="list-group-item list-group-item-success">库存图书管理</a>
+                <a href="#/group" class="list-group-item list-group-item-info">套系管理</a>
+                <a href="#/process" class="list-group-item list-group-item-warning">活动流程管理</a>
+                <a href="#/cross" class="list-group-item list-group-item-danger">漂流进程管理</a>
+                <a href="#/error" class="list-group-item">异常处理</a>
+            </div>
+        </div>
+        <div class="col-md-10" ng-view></div>
+    </div>
+</div>
+
+</body>
+</html>
