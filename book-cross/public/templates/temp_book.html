@@ -1,107 +1,113 @@
-<uib-tabset justified="true">
-    <uib-tab index="0" heading="库存图书" select="findBooks()">
+<div class="col-md-12">
+    <div class="panel">
+        <div class="panel panel-success">
+            <div class="panel-heading">库存图书管理</div>
+            <div class="panel-body">
+                <uib-tabset justified="true">
+                    <uib-tab index="0" heading="库存图书" select="findBooks()">
+                        <table class="table table-striped" ng-show="bookList.length>0">
+                            <thead>
+                            <tr>
+                                <td>书名</td>
+                                <td>作者</td>
+                                <td>出版社</td>
+                                <td>库存量</td>
+                                <td>简介</td>
+                            </tr>
+                            </thead>
+                            <tbody ng-repeat="book in bookList">
+                            <tr>
+                                <td>{{book.name}}</td>
+                                <td>{{book.author}}</td>
+                                <td>{{book.press}}</td>
+                                <td>{{book.storeTotal}}</td>
+                                <td>{{book.intro}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </uib-tab>
+                    <uib-tab index="1" heading="新增图书" select="">
+                        <form novalidate class="form-horizontal" name="bookForm">
+                            <div class="form-group">
+                                <label for="bookName" class="col-sm-2 control-label">书名：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="bookName" name="bookName" ng-model="newbook.name"
+                                           ng-required="true"
+                                           placeholder="请填写书籍名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="storeTotal" class="col-sm-2 control-label">数量：</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="storeTotal" name="storeTotal"
+                                           ng-model="newbook.storeTotal"
+                                           ng-required="true"
+                                           placeholder="请填写入库数量">
+                                    <div class="alert alert-danger" ng-show="bookForm.storeTotal.$error.number">
+                                        必须写入数字
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="author" class="col-sm-2 control-label">作者：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="author" name="author"
+                                           ng-model="newbook.author"
+                                           placeholder="请填写作者">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="press" class="col-sm-2 control-label">出版社：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="press" name="press"
+                                           ng-model="newbook.press"
+                                           placeholder="请填写出版社">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="intro" class="col-sm-2 control-label">简介：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="intro" name="press"
+                                           ng-model="newbook.intro"
+                                           placeholder="请填写简介">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button class="btn btn-primary" type="button" ng-click="saveBook()"
+                                            ng-disabled="bookForm.$invalid">
+                                        保存
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
 
-        <table class="table table-striped" ng-show="bookList.length>0">
-            <thead>
-            <tr>
-                <td>书名</td>
-                <td>作者</td>
-                <td>出版社</td>
-                <td>库存量</td>
-                <td>简介</td>
-            </tr>
-            </thead>
-            <tbody ng-repeat="book in bookList">
-            <tr>
-                <td>{{book.name}}</td>
-                <td>{{book.author}}</td>
-                <td>{{book.press}}</td>
-                <td>{{book.storeTotal}}</td>
-                <td>{{book.intro}}</td>
-            </tr>
-            </tbody>
-        </table>
+                        <hr/>
 
+                        <div class="well">
+                            <div>
+                                <div style="float:right;">
+                                    <button ng-click="uploadBook()">上传</button>
+                                    <button ng-click="removeAllFile()">全部移除</button>
+                                </div>
+                                <input type="file" id="file1" name="excel"/>
+                            </div>
+                            <div ng-repeat="file in files">
+                                <div><span>{{file.name}}</span>
+                                    <div style="float:right;">
+                                        <span>{{file.humanSize}}</span>
+                                        <a ng-click="removeOneFile(file)" title="移除该文件">
+                                            <i class="icon-remove"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <progress style="width:400px;" value="{{file.loaded}}" max="{{file.size}}"></progress>
+                            </div>
+                        </div>
 
-    </uib-tab>
-    <uib-tab index="1" heading="新增图书" select="">
-        <form novalidate class="form-horizontal" name="bookForm">
-            <div class="form-group">
-                <label for="bookName" class="col-sm-2 control-label">书名：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="bookName" name="bookName" ng-model="newbook.name"
-                           ng-required="true"
-                           placeholder="请填写书籍名称">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="storeTotal" class="col-sm-2 control-label">数量：</label>
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="storeTotal" name="storeTotal"
-                           ng-model="newbook.storeTotal"
-                           ng-required="true"
-                           placeholder="请填写入库数量">
-                    <div class="alert alert-danger" ng-show="bookForm.storeTotal.$error.number">
-                        必须写入数字
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="author" class="col-sm-2 control-label">作者：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="author" name="author"
-                           ng-model="newbook.author"
-                           placeholder="请填写作者">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="press" class="col-sm-2 control-label">出版社：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="press" name="press"
-                           ng-model="newbook.press"
-                           placeholder="请填写出版社">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="intro" class="col-sm-2 control-label">简介：</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="intro" name="press"
-                           ng-model="newbook.intro"
-                           placeholder="请填写简介">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-primary" type="button" ng-click="saveBook()"
-                            ng-disabled="bookForm.$invalid">
-                        保存
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <hr/>
-
-        <div class="well">
-            <div>
-                <div style="float:right;">
-                    <button ng-click="uploadBook()">上传</button>
-                    <button ng-click="removeAllFile()">全部移除</button>
-                </div>
-                <input type="file" id="file1" name="excel"/>
-            </div>
-            <div ng-repeat="file in files">
-                <div><span>{{file.name}}</span>
-                    <div style="float:right;">
-                        <span>{{file.humanSize}}</span>
-                        <a ng-click="removeOneFile(file)" title="移除该文件">
-                            <i class="icon-remove"></i>
-                        </a>
-                    </div>
-                </div>
-                <progress style="width:400px;" value="{{file.loaded}}" max="{{file.size}}"></progress>
+                    </uib-tab>
+                </uib-tabset>
             </div>
         </div>
-
-    </uib-tab>
-</uib-tabset>
+    </div>
+</div>

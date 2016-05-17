@@ -1,17 +1,58 @@
-<table>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-</table>
+<div class="col-md-12">
+    <div class="panel">
+        <div class="panel panel-default">
+            <div class="panel-heading">异常处理</div>
+            <div class="panel-body">
+                <div class="well well-sm">
+                    <select class="input-large" ng-model="search.term" ng-change="on_select_changed()">
+                        <option ng-repeat="v in terms">{{v.termName}}</option>
+                    </select>
+                    <select class="input-medium" ng-model="search.grade" ng-change="on_select_changed()">
+                        <option ng-repeat="v in grades">{{v.gradeName}}</option>
+                    </select>
+                    <select class="input-large" ng-model="search.class" ng-change="on_select_changed()">
+                        <option ng-repeat="v in classes">{{v.className}}</option>
+                    </select>
+                </div>
+                <table class="table table-bordered table-condensed table-striped">
+                    <thead>
+                    <th>姓名</th>
+                    <th>书名</th>
+                    <th>还书</th>
+                    <th>备注</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(k, info) in class_error_infos">
+                        <td>{{info.studentName}}</td>
+                        <td>{{info.bookName}}</td>
+                        <td>
+                            <label><input type="checkbox" ng-model="info.return_value" disabled/></label>
+                            <div class="btn-group-vertical" role="group">
+                                <button type="button" class="btn btn-xs btn-info" ng-click="on_return(k)">已归还</button>
+                                <button type="button" class="btn btn-xs btn-primary" ng-click="openModal(k)">已替换</button>
+                            </div>
+                        </td>
+                        <td>暂无</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title"><strong>替换情况</strong></h3>
+    </div>
+    <div class="modal-body text-center">
+        确定用
+        <input ng-model="new_book">
+        替换
+        《{{replace_book}}》?
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">确定</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+    </div>
+</script>

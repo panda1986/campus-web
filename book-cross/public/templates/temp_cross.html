@@ -1,38 +1,61 @@
 <div class="col-md-12">
-    <div class="well well-sm">
-        <select class="input-large" ng-model="search.term" ng-change="on_select_changed()">
-            <option ng-repeat="v in terms">{{v.termName}}</option>
-        </select>
-        <select class="input-large" ng-model="search.group" ng-change="on_select_changed()">
-            <option ng-repeat="v in groups">{{v.groupName}}</option>
-        </select>
-        <select class="input-medium" ng-model="search.grade" ng-change="on_select_changed()">
-            <option ng-repeat="v in grades">{{v.gradeName}}</option>
-        </select>
-    </div>
-    <div class="well well-sm">
-        <div><span><strong>【{{search.term}}：{{search.group}}：{{search.grade}}】漂流轨迹：</strong></span></div>
-        <div class="row" ng-repeat="(month, roams) in months_roams">
-            <div class="col-md-2">
-                <span class="pull-right"><strong>{{month}}:</strong></span>
-            </div>
-            <div class="col-md-10">
-                <a ng-class="roam.state | roam_button_status" ng-repeat="roam in roams"
-                   href="#/cross/{{search.termId}}/{{roam.classId}}/{{roam.beginTime}}/{{roam.overTime}}">
-                    {{search.grade}}{{roam.className}}/{{roam.beginTime}}
-                </a>
-                <!--<button ng-class="roam.state | roam_button_status" ng-repeat="roam in roams">-->
-                    <!--<a href="#/cross/{{search.termId}},{{search.groupId}},{{search.gradeId}},{{roam.classId}},{{roam.beginTime}},{{roam.overTime}}"></a>-->
-                    <!--{{search.grade}}{{roam.className}}/{{roam.beginTime}}-->
-                <!--</button>-->
+    <div class="panel">
+        <div class="panel panel-danger">
+            <div class="panel-heading">漂流进程管理</div>
+            <div class="panel-body">
+                <div class="well well-sm">
+                    <select class="input-large" ng-model="search.term" ng-change="on_select_changed()">
+                        <option ng-repeat="v in terms">{{v.termName}}</option>
+                    </select>
+                    <select class="input-medium" ng-model="search.grade" ng-change="on_select_changed()">
+                        <option ng-repeat="v in grades">{{v.gradeName}}</option>
+                    </select>
+                    <select class="input-large" ng-model="search.option" ng-change="on_select_changed()">
+                        <option ng-repeat="v in options">{{v}}</option>
+                    </select>
+                    <select class="input-large" ng-model="search.group" ng-change="on_select_changed()" ng-show="search.option == '按套系查询'">
+                        <option ng-repeat="v in groups">{{v.groupName}}</option>
+                    </select>
+                    <select class="input-large" ng-model="search.class" ng-change="on_select_changed()" ng-show="search.option == '按班级查询'">
+                        <option ng-repeat="v in classes">{{v.className}}</option>
+                    </select>
+                </div>
+                <div class="well well-sm" ng-show="search.option == '按套系查询'">
+                    <div><span><strong>【{{search.term}}：{{search.grade}}：{{search.group}}】漂流轨迹：</strong></span></div>
+                    <div class="row" ng-repeat="(month, roams) in months_roams">
+                        <div class="col-md-2">
+                            <span class="pull-right"><strong>{{month}}:</strong></span>
+                        </div>
+                        <div class="col-md-10">
+                            <a ng-class="roam.state | roam_button_status" ng-repeat="roam in roams"
+                               href="#/cross/{{search.termId}}/{{roam.classId}}/{{roam.beginTime}}/{{roam.overTime}}">
+                                {{search.grade}}{{roam.className}}/{{roam.beginTime}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="well well-sm" ng-show="search.option == '按班级查询'">
+                    <div><span><strong>【{{search.term}}：{{search.grade}}：{{search.class}}】漂流轨迹：</strong></span></div>
+                    <div class="row" ng-repeat="(month, roams) in months_roams">
+                        <div class="col-md-2">
+                            <span class="pull-right"><strong>{{month}}:</strong></span>
+                        </div>
+                        <div class="col-md-10">
+                            <a ng-class="roam.state | roam_button_status" ng-repeat="roam in roams"
+                               href="#/cross/{{search.termId}}/{{search.classId}}/{{roam.beginTime}}/{{roam.overTime}}">
+                                {{roam.groupName}}/{{roam.beginTime}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="well well-sm">
+                    <span class="label label-warning">收书异常</span>
+                    <span class="label label-success">漂流结束</span>
+                    <span class="label label-primary">开始漂流</span>
+                    <span class="label label-danger">漂流非正常结束</span>
+                    <span class="label label-info">未开始漂流</span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="well well-sm">
-        <span class="label label-warning">收书异常</span>
-        <span class="label label-success">漂流结束</span>
-        <span class="label label-primary">开始漂流</span>
-        <span class="label label-danger">漂流非正常结束</span>
-        <span class="label label-info">未开始漂流</span>
     </div>
 </div>

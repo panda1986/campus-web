@@ -20,17 +20,25 @@ app.use(logger('dev'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser());
+// 设置 Session
+app.use(session({
+    resave:false,
+    saveUninitialized:false,
+    secret: 'keyboard cat'
+}));
 app.use('/public', express.static('public'));
 
 var index = require('./routes/index');
 var sign = require('./routes/sign');
 var cross = require('./routes/cross');
 var setting = require('./routes/setting');
+var base = require('./routes/base');
 
 app.use('/', index);
 app.use('/sign', sign);
 app.use('/cross', cross);
 app.use('/setting', setting);
+app.use('/base',base);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
