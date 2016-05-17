@@ -1,1 +1,17 @@
-活动
+<div class="col-md-12">
+    <div class="panel">
+        <div class="panel panel-warning">
+            <div class="panel-heading">活动流程管理</div>
+            <div class="panel-body">
+                <select class="input-large" ng-model="search.term" ng-change="on_select_changed()">
+                    <option ng-repeat="v in terms">{{v.termName}}</option>
+                </select>
+                <select class="input-medium" ng-model="search.grade" ng-change="on_select_changed()">
+                    <option ng-repeat="v in grades">{{v.gradeName}}</option>
+                </select>
+                <button class="btn btn-info" ng-disabled="!roam_state" ng-click="change_roam_state(1)">一键漂流</button>
+                <button class="btn btn-info" ng-disabled="roam_state" ng-click="change_roam_state(0)">暂停漂流</button>
+            </div>
+        </div>
+    </div>
+</div>

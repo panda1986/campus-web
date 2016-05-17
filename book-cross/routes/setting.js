@@ -68,10 +68,26 @@ var importBook = function (req, res) {
         });
 };
 
+//导入套系
+var importGroup = function (req, res) {
+    console.log(req.file.path);
+    var path = req.file.path;
+    agent.post("http://localhost:8080/book-cross/m/cross/excel/group/upload")
+        //.field("test2", 'bbbbbb')//普通字段和上传文件同时有的情况
+        .attach('excelFile', path)
+        .end(function (err, apiRes) {
+            //fs.unlinkSync(req.file.path);
+            fs.unlink(path, function () {
+                console.log('删除成功:' + path);
+            });
+            res.json(apiRes.body);
+        });
+};
+
 router.get('/', init);
 router.get('/book', findAllBook);
 router.post('/book/1', addBook);
 router.post('/book/2', upload.single('file'), importBook);
-
+router.post('/group/2',upload.single('file'),importGroup);
 module.exports = router;
 

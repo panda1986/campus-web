@@ -1,5 +1,34 @@
-<ul>
-    <li>第一组</li>
-    <li>第二组</li>
-    <li>第三组</li>
-</ul>
+<div class="col-md-12">
+    <div class="panel">
+        <div class="panel panel-success">
+            <div class="panel-heading">批量导入套系与书</div>
+            <div class="panel-body">
+                <uib-tabset justified="true">
+                    <uib-tab index="1" heading="套系与书" select="">
+                        <div class="well">
+                            <div>
+                                <div style="float:right;">
+                                    <button ng-click="uploadGroup()">上传</button>
+                                    <button ng-click="removeAllFile()">全部移除</button>
+                                </div>
+                                <input type="file" id="file1" name="excel"/>
+                            </div>
+                            <div ng-repeat="file in files">
+                                <div><span>{{file.name}}</span>
+                                    <div style="float:right;">
+                                        <span>{{file.humanSize}}</span>
+                                        <a ng-click="removeOneFile(file)" title="移除该文件">
+                                            <i class="icon-remove"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <progress style="width:400px;" value="{{file.loaded}}" max="{{file.size}}"></progress>
+                            </div>
+                        </div>
+
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>
